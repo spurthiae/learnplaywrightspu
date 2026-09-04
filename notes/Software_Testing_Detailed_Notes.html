@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Software Testing — Detailed Visual Notes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --bg:#0f1720; --panel:#141f2b; --ink:#eaf2f5; --sub:#9fb4c2; --line:#22333f;
+    --c1:#38bdf8; --c1-soft:#0e2733;
+    --c2:#a78bfa; --c2-soft:#211c38;
+    --c3:#34d399; --c3-soft:#0e2a24;
+    --c4:#fb923c; --c4-soft:#2c1c0e;
+    --c5:#f472b6; --c5-soft:#2b1522;
+    --c6:#f87171; --c6-soft:#2c1416;
+    --c7:#facc15; --c7-soft:#2b2308;
+    --c8:#22d3ee; --c8-soft:#0c2730;
+    --c9:#4ade80; --c9-soft:#0e2a17;
+    --c10:#c084fc; --c10-soft:#241a30;
+    --c11:#fca5a5; --c11-soft:#2c1a1a;
+    --c12:#93c5fd; --c12-soft:#111f30;
+    --c13:#fde68a; --c13-soft:#2b2410;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 500px at 10% -10%, #16283a 0%, transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, #241a34 0%, transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    line-height:1.6;
+    padding-bottom:80px;
+  }
+  .hero{ padding:60px 24px 30px; text-align:center; }
+  .hero .kicker{
+    display:inline-block; font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--c1); background:var(--c1-soft); border:1px solid #1c3a4a;
+    padding:6px 14px; border-radius:999px; margin-bottom:16px; font-weight:700;
+  }
+  .hero h1{
+    font-family:Georgia,"Times New Roman",serif; font-size:clamp(30px,5vw,52px); margin:0 0 10px;
+    background:linear-gradient(90deg,#38bdf8,#a78bfa 30%,#f472b6 60%,#facc15 85%,#4ade80);
+    -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1.1;
+  }
+  .hero p{ color:var(--sub); max-width:640px; margin:0 auto; font-size:15.5px; }
+
+  nav.chips{
+    display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
+    max-width:1040px; margin:28px auto 0; padding:0 20px;
+  }
+  nav.chips a{
+    text-decoration:none; font-size:12.5px; font-weight:600; color:var(--ink);
+    padding:7px 12px; border-radius:999px; border:1px solid var(--line); background:var(--panel);
+    transition:transform .15s ease, border-color .15s ease; white-space:nowrap;
+  }
+  nav.chips a:hover{ transform:translateY(-2px); }
+
+  main{ max-width:960px; margin:0 auto; padding:20px; }
+
+  details.topic{
+    margin-top:20px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    scroll-margin-top:20px;
+  }
+  details.topic > summary{
+    list-style:none;
+    cursor:pointer;
+    padding:18px 22px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  details.topic > summary::-webkit-details-marker{ display:none; }
+  details.topic > summary .chev{
+    margin-left:auto;
+    font-size:14px;
+    color:var(--sub);
+    transition:transform .2s ease;
+  }
+  details.topic[open] > summary .chev{ transform:rotate(90deg); }
+  .num{
+    font-family:Georgia,serif; font-weight:700; font-size:20px;
+    width:40px;height:40px; flex:none; display:flex;align-items:center;justify-content:center;
+    border-radius:12px; color:#0f1720;
+  }
+  summary h2{ margin:0; font-size:19px; }
+  summary .sub{ font-size:12.5px; color:var(--sub); font-weight:400; display:block; margin-top:2px;}
+
+  .body{ padding:2px 22px 24px; }
+  .card{
+    background:#101a24; border:1px solid var(--line); border-radius:12px;
+    padding:18px 20px; margin-bottom:14px;
+  }
+  .card h3{ margin-top:0; font-size:15px; }
+  .card h4{ margin:14px 0 6px; font-size:13.5px; color:var(--sub); text-transform:uppercase; letter-spacing:.04em;}
+
+  .example{ border-left:4px solid; border-radius:10px; padding:12px 15px; margin:12px 0; font-size:14px; }
+  .example b{ display:block; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; }
+
+  table{ width:100%; border-collapse:collapse; margin:10px 0; font-size:13.5px; }
+  th,td{ text-align:left; padding:8px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ color:var(--sub); font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; font-weight:700; }
+  tr:last-child td{ border-bottom:none; }
+
+  .flow{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:12px 0; }
+  .flow .step{
+    border:1px solid; padding:7px 12px; border-radius:9px; font-size:12.5px; font-weight:600; white-space:nowrap;
+  }
+  .flow .arrow{ color:var(--sub); font-size:14px; }
+
+  ul.simple{ margin:8px 0; padding-left:20px; }
+  ul.simple li{ margin-bottom:6px; font-size:14px; }
+  ol.simple{ margin:8px 0; padding-left:20px; }
+  ol.simple li{ margin-bottom:6px; font-size:14px; }
+
+  code{ background:#0c1620; border:1px solid var(--line); padding:1px 6px; border-radius:5px; font-size:12.5px; color:#7ee8c4; }
+  pre{
+    background:#0c1620; border:1px solid var(--line); border-radius:10px; padding:14px 16px;
+    overflow-x:auto; font-size:12.5px; color:#cbd5e1; line-height:1.55;
+  }
+
+  .pill{ display:inline-block; padding:2px 9px; border-radius:999px; font-size:12px; font-weight:700; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:700px){ .grid2{ grid-template-columns:1fr; } nav.chips{display:none;} }
+
+  .glossary{ display:grid; grid-template-columns:1fr 2fr; gap:8px 18px; font-size:14px; }
+  .glossary dt{ font-weight:700; color:var(--c1); }
+  .glossary dd{ margin:0 0 8px; color:var(--sub); }
+
+  footer{ text-align:center; color:var(--sub); font-size:13px; margin-top:60px; padding:0 20px; }
+
+  .toggle-all{
+    display:block; margin:26px auto 0; text-align:center;
+  }
+  .toggle-all button{
+    background:var(--panel); color:var(--ink); border:1px solid var(--line);
+    padding:9px 18px; border-radius:999px; font-size:13px; font-weight:600; cursor:pointer;
+  }
+  .toggle-all button:hover{ border-color:var(--c1); color:var(--c1); }
+
+  /* per-part accent classes: num bg, tag colors, example border, flow step colors */
+  .p1 .num{background:var(--c1);} .p1 summary .sub{color:var(--c1);} .p1 .example{border-color:var(--c1); background:var(--c1-soft);} .p1 .flow .step{background:var(--c1-soft); color:var(--c1); border-color:#1c3a4a;}
+  .p2 .num{background:var(--c2);} .p2 summary .sub{color:var(--c2);} .p2 .example{border-color:var(--c2); background:var(--c2-soft);} .p2 .flow .step{background:var(--c2-soft); color:var(--c2); border-color:#332a4d;}
+  .p3 .num{background:var(--c3);} .p3 summary .sub{color:var(--c3);} .p3 .example{border-color:var(--c3); background:var(--c3-soft);} .p3 .flow .step{background:var(--c3-soft); color:var(--c3); border-color:#1c3a30;}
+  .p4 .num{background:var(--c4);} .p4 summary .sub{color:var(--c4);} .p4 .example{border-color:var(--c4); background:var(--c4-soft);} .p4 .flow .step{background:var(--c4-soft); color:var(--c4); border-color:#3d2a14;}
+  .p5 .num{background:var(--c5);} .p5 summary .sub{color:var(--c5);} .p5 .example{border-color:var(--c5); background:var(--c5-soft);} .p5 .flow .step{background:var(--c5-soft); color:var(--c5); border-color:#3a1e2d;}
+  .p6 .num{background:var(--c6);} .p6 summary .sub{color:var(--c6);} .p6 .example{border-color:var(--c6); background:var(--c6-soft);} .p6 .flow .step{background:var(--c6-soft); color:var(--c6); border-color:#3a1c1e;}
+  .p7 .num{background:var(--c7); color:#241f04;} .p7 summary .sub{color:var(--c7);} .p7 .example{border-color:var(--c7); background:var(--c7-soft);} .p7 .flow .step{background:var(--c7-soft); color:var(--c7); border-color:#3a2f0c;}
+  .p8 .num{background:var(--c8);} .p8 summary .sub{color:var(--c8);} .p8 .example{border-color:var(--c8); background:var(--c8-soft);} .p8 .flow .step{background:var(--c8-soft); color:var(--c8); border-color:#123a45;}
+  .p9 .num{background:var(--c9);} .p9 summary .sub{color:var(--c9);} .p9 .example{border-color:var(--c9); background:var(--c9-soft);} .p9 .flow .step{background:var(--c9-soft); color:var(--c9); border-color:#1a3a25;}
+  .p10 .num{background:var(--c10);} .p10 summary .sub{color:var(--c10);} .p10 .example{border-color:var(--c10); background:var(--c10-soft);} .p10 .flow .step{background:var(--c10-soft); color:var(--c10); border-color:#3a2a4d;}
+  .p11 .num{background:var(--c11); color:#2c1a1a;} .p11 summary .sub{color:var(--c11);} .p11 .example{border-color:var(--c11); background:var(--c11-soft);} .p11 .flow .step{background:var(--c11-soft); color:var(--c11); border-color:#4a2a2a;}
+  .p12 .num{background:var(--c12); color:#111f30;} .p12 summary .sub{color:var(--c12);} .p12 .example{border-color:var(--c12); background:var(--c12-soft);} .p12 .flow .step{background:var(--c12-soft); color:var(--c12); border-color:#22354d;}
+  .p13 .num{background:var(--c13); color:#2b2410;} .p13 summary .sub{color:var(--c13);} .p13 .example{border-color:var(--c13); background:var(--c13-soft);} .p13 .flow .step{background:var(--c13-soft); color:var(--c13); border-color:#4a3f14;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="kicker">QA Learning Notes · Full Detail Edition</span>
+  <h1>Software Testing,<br>Complete &amp; Colorful</h1>
+  <p>Every topic from your class, in full depth — color-coded by part, with real examples (WhatsApp, OrangeHRM, BookMyShow, Infosys, IKEA). Tap any section to expand it.</p>
+</div>
+
+<nav class="chips">
+  <a href="#p1">1 Industry</a><a href="#p2">2 Manual/Auto</a><a href="#p3">3 SDLC</a><a href="#p4">4 Agile</a>
+  <a href="#p5">5 STLC</a><a href="#p6">6 Test Plan</a><a href="#p7">7 Testing Types</a><a href="#p8">8 Levels</a>
+  <a href="#p9">9 Test Cases</a><a href="#p10">10 Defects</a><a href="#p11">11 Metrics</a><a href="#p12">12 Resume</a><a href="#p13">13 API</a>
+</nav>
+
+<div class="toggle-all"><button onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">Expand all sections</button></div>
+
+<main>
+
+<!-- PART 1 -->
+<details class="topic p1" id="p1" open>
+<summary><div class="num">1</div><div><h2>Industry Overview</h2><span class="sub">Companies · apps · team structure</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <h3>Where testing happens</h3>
+    <p>~90% Web Applications, remainder Mobile/Desktop.</p>
+    <div class="example"><b>Real example — PhonePe</b>Create account · send money by mobile number · send money by bank number · send via UPI · send via QR scanner.</div>
+  </div>
+  <div class="card">
+    <h3>Service-based vs Product-based companies</h3>
+    <table>
+      <tr><th>Service-based</th><th>Product-based</th></tr>
+      <tr><td>Builds software <i>for</i> clients — TCS, Infosys, Wipro, Cognizant, Accenture, Capgemini, Deloitte, EY, L&T, HP, DXC, Dell</td><td>Builds &amp; owns its own product — SAP, Ola, Zomato, Swiggy, Amazon, Flipkart</td></tr>
+    </table>
+    <div class="example"><b>Real numbers — Infosys</b>Quarterly profit ~₹8,501 crore · ~328,594 employees · Fresher ~₹3.5 LPA → 5yrs ~₹15 LPA → 10yrs ~₹30 LPA · CEO comp ~₹82.3 crore. Client example: IKEA hires Infosys to build its inventory website.</div>
+  </div>
+  <div class="card">
+    <h3>Typical small team</h3>
+    <ul class="simple">
+      <li>1 Manager · 1 Product Owner/BA</li>
+      <li>2 Frontend Devs · 2 Backend Devs</li>
+      <li>2 Testers</li>
+    </ul>
+    <div class="example"><b>Tester skillset</b>No coding needed for manual testing — you need strong <b>observation</b> and <b>analytical</b> skills instead.</div>
+  </div>
+</div>
+</details>
+
+<!-- PART 2 -->
+<details class="topic p2" id="p2">
+<summary><div class="num">2</div><div><h2>Manual vs Automation</h2><span class="sub">Approach, tools & salary progression</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card grid2">
+    <div>
+      <h4>Manual testing</h4>
+      <ul class="simple"><li>Human tests directly</li><li>Test Plan, Test Cases, Reports, Defect Reports</li></ul>
+    </div>
+    <div>
+      <h4>Automation testing</h4>
+      <ul class="simple"><li>~90% scripting + 10% AI tools</li><li>Auto-generated reports</li></ul>
+    </div>
+  </div>
+  <div class="card">
+    <h3>AI tools in testing today</h3>
+    <p>GitHub Copilot · Playwright MCP · GitHub MCP</p>
+    <h4>Illustrative salary progression (India)</h4>
+    <table>
+      <tr><th>Experience</th><th>Approx. Salary</th></tr>
+      <tr><td>3 yrs</td><td>₹70,000–80,000/mo or ~9 LPA</td></tr>
+      <tr><td>4 yrs</td><td>~12 LPA</td></tr>
+      <tr><td>5 yrs</td><td>~15 LPA</td></tr>
+      <tr><td>7 yrs (avg)</td><td>~45 LPA</td></tr>
+      <tr><td>10 yrs</td><td>30+ LPA</td></tr>
+    </table>
+  </div>
+</div>
+</details>
+
+<!-- PART 3 -->
+<details class="topic p3" id="p3">
+<summary><div class="num">3</div><div><h2>SDLC — Software Development Life Cycle</h2><span class="sub">Phases & models</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <h3>The six phases</h3>
+    <div class="flow">
+      <div class="step">1. Requirement</div><span class="arrow">→</span>
+      <div class="step">2. Design</div><span class="arrow">→</span>
+      <div class="step">3. Development</div><span class="arrow">→</span>
+      <div class="step">4. Testing (STLC)</div><span class="arrow">→</span>
+      <div class="step">5. Release</div><span class="arrow">→</span>
+      <div class="step">6. Maintenance</div>
+    </div>
+    <h4>Phase 1 details</h4>
+    <p>Client SPOC gives requirements → <b>FRS</b> document. Tech decided: Frontend (Angular/React/Vue/Node), Backend (.NET/Java/Python), APIs (REST/RPC/SOAP/GraphQL), DB (SQL/MongoDB/DynamoDB). Architect finalizes HLD.</p>
+    <h4>Phase 2 details</h4><p>UI/UX designers produce HLD (architecture) and LLD (screen-level design, e.g., in Figma).</p>
+    <div class="example"><b>Real example — WhatsApp requirement list (46 features)</b>Create account, sync contacts, send/receive messages, voice/video call, security &amp; privacy, e2e encryption, 2-step verification, status upload, broadcast, groups, drafts, edit message, AI chatbot, channels, backup, notifications, archive, starred messages, block contact, live location, lock chat, and more.</div>
+  </div>
+  <div class="card">
+    <h3>SDLC Models</h3>
+    <table>
+      <tr><th>Model</th><th>How it works</th><th>Best for / Note</th></tr>
+      <tr><td><b>Waterfall</b></td><td>Sequential: Requirement→Design→Dev→Test→Release, once</td><td>Small projects only — slow, low client involvement</td></tr>
+      <tr><td><b>V-Model</b></td><td>Verification (design) mirrored by Validation (testing), planned together</td><td>Every dev stage has a matched test stage</td></tr>
+      <tr><td><b>Prototype</b></td><td>Build a dummy demo first, get client approval, then build real thing</td><td>Reduces risk of building the wrong product</td></tr>
+      <tr><td><b>Spiral</b></td><td>Iterative — repeat requirement→build→test cycles</td><td>Refines product each loop</td></tr>
+      <tr><td><b>Agile</b></td><td>Small pieces delivered in sprints; least documentation priority</td><td>High client involvement — used ~99% via Scrum</td></tr>
+    </table>
+  </div>
+</div>
+</details>
+
+<!-- PART 4 -->
+<details class="topic p4" id="p4">
+<summary><div class="num">4</div><div><h2>Agile Methodology — Full Detail</h2><span class="sub">Roles, artifacts, ceremonies, estimation</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <h3>Artifact hierarchy</h3>
+    <pre>EPIC 1
+ ├─ Feature 1
+ │   ├─ User Story 1 (Product Backlog Item)
+ │   │    - Description / Acceptance Criteria
+ │   ├─ User Story 2, 3 ...
+ ├─ Feature 2 (User Story 7, 8)
+ └─ Feature 3 (User Story 9)
+EPIC 2, EPIC 3 ...</pre>
+    <p><b>Product Backlog</b> = full master list of all user stories. <b>Sprint Backlog</b> = subset picked for the current sprint only.</p>
+  </div>
+
+  <div class="card grid2">
+    <div>
+      <h3>Product Owner / BA</h3>
+      <ul class="simple">
+        <li>SPOC from client; writes Epics/Features/Stories</li>
+        <li>Sets & re-prioritizes work</li>
+        <li>Reviews test plan & test cases</li>
+        <li>Decides disputed defects</li>
+        <li>Signs off completed stories</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Scrum Master</h3>
+      <ul class="simple">
+        <li>Manages & motivates team</li>
+        <li>Schedules all meetings</li>
+        <li>Facilitator — removes blockers</li>
+        <li>Arranges KT for new joiners</li>
+        <li>Provides infrastructure/access</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Tester responsibilities in Agile</h3>
+    <ol class="simple">
+      <li>Understand Epics/Features/User Stories (clarify with PO)</li>
+      <li>Write Test Plan → reviewed by SM & PO</li>
+      <li>Write Test Cases → reviewed by peer & PO</li>
+      <li>Set up test environment & data</li>
+      <li>Execute tests, report/track/retest defects, write automation</li>
+      <li>Test Closure: Test Report, Defect Report, RTM</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3>Agile ceremonies</h3>
+    <table>
+      <tr><th>Meeting</th><th>When</th><th>Duration</th><th>Attendees</th><th>Purpose</th></tr>
+      <tr><td>Sprint Planning</td><td>Day 1</td><td>2–4 hrs</td><td>PO, SM, team</td><td>Assign stories & points</td></tr>
+      <tr><td>Daily Stand-up</td><td>Every day</td><td>15 min</td><td>SM, PO, team</td><td>Yesterday / Today / Blockers</td></tr>
+      <tr><td>Backlog Grooming</td><td>Mid-sprint</td><td>1–2 hrs</td><td>SM, PO, team</td><td>PO explains & team estimates upcoming stories</td></tr>
+      <tr><td>Sprint Review</td><td>End of sprint</td><td>2 hrs</td><td>+Stakeholders</td><td>Demo completed stories (Definition of Done)</td></tr>
+      <tr><td>Retrospective</td><td>Start of next sprint</td><td>1 hr</td><td>SM, PO, team</td><td>What went well / wrong / improve</td></tr>
+    </table>
+    <div class="example"><b>Real example — Sprint Planning table</b>US1 (3 SP) → Hanumanth · US2 (2 SP) → Latha · US3 (5 SP) → Ruthvik · US5 (8 SP) → Koushal. Team total committed ~40 SP based on working days, leaves, and spillover.</div>
+    <div class="example"><b>Definition of Done checklist</b>PO explained story → Dev+QA analyzed → Dev complete → Testing complete → Bugs fixed → Retested → Demo given → Client accepted.</div>
+  </div>
+
+  <div class="card">
+    <h3>Estimation — Planning Poker</h3>
+    <p>Story points via Fibonacci: <code>1, 2, 3, 5, 8, 13...</code>, based on days of work & complexity.</p>
+    <table>
+      <tr><th>Days of work</th><th>Story Points</th></tr>
+      <tr><td>1 day</td><td>1 SP</td></tr>
+      <tr><td>2 days</td><td>2 SP</td></tr>
+      <tr><td>3 days</td><td>3 SP</td></tr>
+      <tr><td>4–6 days</td><td>5 SP</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Other Agile terms</h3>
+    <ul class="simple">
+      <li><b>Spillover Story</b> — unfinished, moved to next sprint</li>
+      <li><b>Technical Story</b> — not tested by QA (e.g., refactoring, DB changes)</li>
+      <li><b>Spike Story</b> — research-only for developers</li>
+      <li><b>Burndown Chart</b> — remaining work vs time graph</li>
+      <li><b>Velocity</b> — story points actually delivered (e.g., planned 36 → delivered 31 = velocity 31)</li>
+    </ul>
+    <div class="example"><b>Real example — Sprint 7, BookMyShow</b>US1234 Recommended Movies · US1235 [Technical] Login refactor · US1239 [SPIKE] Date filter analysis · US1240 Search · US1241 E-gift cards.</div>
+  </div>
+
+  <div class="card">
+    <h3>Tools</h3>
+    <table>
+      <tr><th>Purpose</th><th>Tools</th></tr>
+      <tr><td>Agile PM</td><td>Rally, Jira, Azure DevOps, Trello, Zoho</td></tr>
+      <tr><td>Email</td><td>Outlook, Gmail</td></tr>
+      <tr><td>Collaboration</td><td>MS Teams, Slack, Google Workspace</td></tr>
+      <tr><td>HLD</td><td>PowerPoint, Lucidchart</td></tr>
+      <tr><td>LLD</td><td>Figma, Adobe XD</td></tr>
+    </table>
+  </div>
+</div>
+</details>
+
+<!-- PART 5 -->
+<details class="topic p5" id="p5">
+<summary><div class="num">5</div><div><h2>STLC — Software Testing Life Cycle</h2><span class="sub">Principles & 6 phases</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <h3>7 testing principles</h3>
+    <ul class="simple">
+      <li>Exhaustive testing is impossible</li>
+      <li>Testing shows bugs exist — never proves zero bugs</li>
+      <li>Defects cluster — some modules break more ("defect clustering")</li>
+      <li>Repeating identical tests stops finding new bugs ("pesticide paradox") — vary your approach</li>
+      <li>Early defect detection saves time & money</li>
+      <li>Testing type depends on context — not everything is tested everywhere</li>
+      <li>A failure isn't only the tester's fault</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>The 6 STLC phases</h3>
+    <div class="flow">
+      <div class="step">1. Requirement Analysis</div><span class="arrow">→</span>
+      <div class="step">2. Test Plan</div><span class="arrow">→</span>
+      <div class="step">3. Test Case Design</div><span class="arrow">→</span>
+      <div class="step">4. Env Setup</div><span class="arrow">→</span>
+      <div class="step">5. Execution</div><span class="arrow">→</span>
+      <div class="step">6. Closure</div>
+    </div>
+  </div>
+</div>
+</details>
+
+<!-- PART 6 -->
+<details class="topic p6" id="p6">
+<summary><div class="num">6</div><div><h2>Test Plan Documentation (IEEE 829)</h2><span class="sub">All 19 sections</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <h3>All 19 sections — using BookMyShow as example</h3>
+    <table>
+      <tr><th>#</th><th>Section</th><th>Example / Notes</th></tr>
+      <tr><td>1</td><td>Test Plan Identifier</td><td>ID + project name heading</td></tr>
+      <tr><td>2</td><td>References</td><td>User Stories, Design Docs</td></tr>
+      <tr><td>3</td><td>Introduction</td><td>~5 paragraphs about the project</td></tr>
+      <tr><td>4</td><td>Test Items (Scope/Out-of-scope)</td><td>In: Chrome/Firefox/Edge/Safari · Out: UC Browser/Opera</td></tr>
+      <tr><td>5</td><td>Software Risk Issues</td><td>Infra availability, changing requirements, scope changes</td></tr>
+      <tr><td>6</td><td>Features to be Tested</td><td>US1234 – Login</td></tr>
+      <tr><td>7</td><td>Features NOT to be Tested</td><td>Spike / Technical stories</td></tr>
+      <tr><td>8</td><td>Approach</td><td>Type & level of testing</td></tr>
+      <tr><td>9</td><td>Pass/Fail Criteria</td><td>Expected = Actual → Pass</td></tr>
+      <tr><td>10</td><td>Suspension/Entry/Exit Criteria</td><td>Entry: 100% dev + unit tested + reviewed cases + env ready</td></tr>
+      <tr><td>11</td><td>Test Deliverables</td><td>Test Plan, Cases, Report, Defect Report, RTM</td></tr>
+      <tr><td>12</td><td>Remaining Test Tasks</td><td>Usually NA</td></tr>
+      <tr><td>13</td><td>Environmental Needs</td><td>Browsers, Rally/Figma access, Android 13–17, iOS 18–26, BrowserStack/Sauce Labs</td></tr>
+      <tr><td>14</td><td>Staffing/Training Needs</td><td>Any KT required</td></tr>
+      <tr><td>15</td><td>Responsibilities</td><td>Harshitha – QA Lead: plan, review, execution</td></tr>
+      <tr><td>16</td><td>Schedule</td><td>User Story | Owner | Start | End dates</td></tr>
+      <tr><td>17</td><td>Planning Risks</td><td>Usually NA</td></tr>
+      <tr><td>18</td><td>Approvals</td><td>Scrum Master, Product Owner</td></tr>
+      <tr><td>19</td><td>Glossary</td><td>UAT, PO, etc.</td></tr>
+    </table>
+    <div class="example"><b>Practical notes</b>One Test Plan per Sprint, written by a senior tester at sprint start. Most companies provide a reusable template. Agile favors working software over heavy documentation.</div>
+  </div>
+</div>
+</details>
+
+<!-- PART 7 -->
+<details class="topic p7" id="p7">
+<summary><div class="num">7</div><div><h2>Types of Testing — Full Breakdown</h2><span class="sub">Functional cycle + non-functional deep dive</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <h3>By code access</h3>
+    <table>
+      <tr><th>Type</th><th>Who</th><th>Access</th></tr>
+      <tr><td>White Box</td><td>Developer</td><td>Full — line by line (Unit Testing)</td></tr>
+      <tr><td>Black Box</td><td>QA Tester</td><td>None — UI/output only</td></tr>
+      <tr><td>Grey Box</td><td>Dev + Tester</td><td>Partial — together</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>The functional testing cycle</h3>
+    <div class="flow">
+      <div class="step">Smoke (30–70 tests)</div><span class="arrow">→</span>
+      <div class="step">User Story Testing</div><span class="arrow">→</span>
+      <div class="step">Defect Fix Cycle</div><span class="arrow">→</span>
+      <div class="step">Sanity</div><span class="arrow">→</span>
+      <div class="step">Retesting</div><span class="arrow">→</span>
+      <div class="step">Regression (700–3000 tests)</div>
+    </div>
+    <div class="example"><b>Real example</b>Add Employee – Roopa – 30 tests → 5 FAIL, 25 PASS. Before release, full app (300+ stories) gets a Regression pass even though only 5 stories are new.</div>
+  </div>
+  <div class="card">
+    <h3>Non-functional testing — deep dive</h3>
+    <table>
+      <tr><th>Type</th><th>Checks</th><th>Example</th></tr>
+      <tr><td>Usability</td><td>Is it user-friendly?</td><td>Icons/labels clear on WhatsApp, Tally, SAP</td></tr>
+      <tr><td>Performance</td><td>Speed & behavior under load</td><td>JMeter/LoadRunner/K6/BlazeMeter</td></tr>
+      <tr><td>— Load</td><td>Expected traffic levels</td><td>100 → 1,000 → 10,000 → 1 lakh → 5 lakh users</td></tr>
+      <tr><td>— Stress</td><td>Extreme, beyond capacity</td><td>5 million users at once</td></tr>
+      <tr><td>— Endurance</td><td>Large load over long duration</td><td>24hrs sustained traffic</td></tr>
+      <tr><td>— Volume</td><td>Large data size in server</td><td>10 years of transaction history</td></tr>
+      <tr><td>Security</td><td>Protection from attacks</td><td>Pen testing, vulnerability scans, audits</td></tr>
+      <tr><td>Compliance</td><td>Legal/regulatory standards</td><td>Involves legal associates</td></tr>
+      <tr><td>I18N</td><td>Built to support multiple locales</td><td>Currency, time zone, language, culture</td></tr>
+      <tr><td>L10N</td><td>Adapted for a specific locale</td><td>Region-specific version</td></tr>
+      <tr><td>Ad-hoc/Exploratory</td><td>Unscripted free testing</td><td>Web, Mobile, APIs</td></tr>
+    </table>
+  </div>
+</div>
+</details>
+
+<!-- PART 8 -->
+<details class="topic p8" id="p8">
+<summary><div class="num">8</div><div><h2>Levels of Testing (Quality Gates)</h2><span class="sub">Unit → Integration → System → Acceptance</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <table>
+      <tr><th>Level</th><th>By</th><th>Checks</th><th>Example</th></tr>
+      <tr><td>1. Unit</td><td>Developer</td><td>Every line of code</td><td>JUnit/TestNG (Java), Jest/Cypress (JS), NUnit (C#), PyTest (Python)</td></tr>
+      <tr><td>2. Integration</td><td>QA</td><td>Data flow between modules</td><td>Add to Cart → Checkout data flow</td></tr>
+      <tr><td>3. System</td><td>QA</td><td>Full end-to-end flow</td><td>Search → Seat → Pay → Ticket (BookMyShow)</td></tr>
+      <tr><td>4. Acceptance</td><td>PO (UAT) / Beta users</td><td>Client/user sign-off</td><td>PO tests like a real customer before release</td></tr>
+    </table>
+    <div class="example"><b>Code coverage</b>270 of 300 lines covered → 270/300×100 = <b>90%</b>. Tools: SonarQube, Istanbul, JaCoCo. Rule of thumb: 90%+ coverage → story accepted for QA testing.</div>
+  </div>
+</div>
+</details>
+
+<!-- PART 9 -->
+<details class="topic p9" id="p9">
+<summary><div class="num">9</div><div><h2>Test Cases — Deep Dive</h2><span class="sub">Design techniques, templates & why we write them</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <h3>Sample test cases — Login (US1234)</h3>
+    <ol class="simple">
+      <li>Valid username + valid password → dashboard</li>
+      <li>Valid username + invalid password → error</li>
+      <li>Invalid username + valid password → error</li>
+      <li>Invalid username + invalid password → error</li>
+      <li>Empty fields → validation error</li>
+      <li>Already logged-in user → redirected to dashboard</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>Why we document test cases</h3>
+    <ul class="simple">
+      <li>Checklist during execution</li>
+      <li>Usable by a different tester</li>
+      <li>Evidence of what was tested</li>
+      <li>Basis for Smoke & Regression suites</li>
+      <li>Basis for Automation</li>
+      <li>Basis for Test Reports</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>5 Test case design techniques</h3>
+    <table>
+      <tr><th>Technique</th><th>When to use</th><th>Example</th></tr>
+      <tr><td>Equivalence Partitioning</td><td>Group inputs into classes</td><td>1–100 field → test alphabet, special char, empty, valid (50)</td></tr>
+      <tr><td>Boundary Value Analysis</td><td>Test range edges</td><td>5MB upload → 5119KB / 5120KB / 5121KB</td></tr>
+      <tr><td>Decision Table</td><td>Multiple conditions → different outputs</td><td>School app: 5 notification types × 5 user roles</td></tr>
+      <tr><td>State Transition</td><td>Behavior depends on previous state</td><td>ATM: wrong PIN → fewer chances each time</td></tr>
+      <tr><td>Use Case Testing</td><td>Real usage scenarios</td><td>Payment: bank/card/coupon/COD</td></tr>
+    </table>
+    <div class="example"><b>Decision table — school notifications</b>Holiday → all 5 roles ✅. Payment Due → Parent &amp; Admin only. Attendance → Parent &amp; Student only.</div>
+  </div>
+  <div class="card">
+    <h3>Test case template fields</h3>
+    <p><code>S.No · Created Date · Test Case ID · Created By · Test Scenario · Test Case Title · Description · Test Steps · Expected Result · Actual Result · Pre-condition · Test Data · Reviewed By · Status</code></p>
+  </div>
+</div>
+</details>
+
+<!-- PART 10 -->
+<details class="topic p10" id="p10">
+<summary><div class="num">10</div><div><h2>Defects — Full Detail</h2><span class="sub">Life cycle, severity/priority, special scenarios</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <h3>Defect Life Cycle</h3>
+    <div class="flow">
+      <div class="step">New/Open</div><span class="arrow">→</span>
+      <div class="step">Assigned</div><span class="arrow">→</span>
+      <div class="step">In Progress</div><span class="arrow">→</span>
+      <div class="step">Fixed</div><span class="arrow">→</span>
+      <div class="step">Pending Retest</div><span class="arrow">→</span>
+      <div class="step">Verified</div><span class="arrow">→</span>
+      <div class="step">Closed</div>
+    </div>
+    <p style="font-size:13.5px;color:var(--sub)">Alt paths: <b>Reopen</b> (still broken) · <b>Rejected</b> (not a bug) · <b>Deferred</b> (pushed to future sprint)</p>
+  </div>
+  <div class="card">
+    <h3>Severity vs Priority</h3>
+    <div class="example" style="border-color:#f87171;background:#2c1416;"><b>S1 / P1</b>Login completely broken → major impact, fix now</div>
+    <div class="example" style="border-color:#facc15;background:#2b2308;"><b>S4 / P4</b>Footer spelling mistake → minor, fix whenever</div>
+    <p style="font-size:13.5px;color:var(--sub)">They're independent: D2 = S4,P1 and D4 = S1,P4 both occur in practice.</p>
+  </div>
+  <div class="card">
+    <h3>Handling a disputed defect</h3>
+    <ol class="simple">
+      <li>Show proof from Epic/Feature/Story/Design doc</li>
+      <li>Set up a call with Developer + PO</li>
+      <li>Explain the defect</li>
+      <li>If PO agrees → developer fixes; else it stays Rejected</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>Special scenarios</h3>
+    <ul class="simple">
+      <li><b>Same bug reappears after closure</b> → don't reopen the old one, file a brand-new defect</li>
+      <li><b>Defect leaked to Production</b> → check config, data, volume, or environment mismatch; add a missing test case if one didn't exist</li>
+      <li><b>Intermittent issue</b> → doesn't appear consistently</li>
+    </ul>
+    <h4>Environment pipeline</h4>
+    <div class="flow">
+      <div class="step">Dev</div><span class="arrow">→</span><div class="step">QA</div><span class="arrow">→</span><div class="step">Pre-Prod</div><span class="arrow">→</span><div class="step">UAT</div><span class="arrow">→</span><div class="step">Prod</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Key terms</h3>
+    <ul class="simple">
+      <li><b>Hotfix</b> — urgent fix released directly to Production</li>
+      <li><b>Defect Leakage</b> — missed in QA, found in Prod</li>
+      <li><b>Defect Triage</b> — dev+tester call to find root cause, tester reproduces live</li>
+      <li><b>RCA</b> — developer documents why the bug happened</li>
+      <li><b>Defect Density</b> = Defects ÷ Software Size</li>
+    </ul>
+    <div class="example"><b>Automation scale</b>1 story ≈ 45 test cases · Smoke ≈ 45 · Regression ≈ 400–2400+ test cases, often automated (e.g. with Playwright).</div>
+  </div>
+</div>
+</details>
+
+<!-- PART 11 -->
+<details class="topic p11" id="p11">
+<summary><div class="num">11</div><div><h2>Test Closure &amp; Metrics</h2><span class="sub">RTM + formulas</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <h3>RTM (Requirement Traceability Matrix)</h3>
+    <table>
+      <tr><th>User Story</th><th>Test Case Count</th><th>Type</th><th>Defects</th></tr>
+      <tr><td>Login</td><td>8</td><td>Functional</td><td>0</td></tr>
+      <tr><td>Add Employee</td><td>varies</td><td>Functional</td><td>varies</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Metrics formulas</h3>
+    <table>
+      <tr><th>Metric</th><th>Formula</th><th>Example</th></tr>
+      <tr><td>% Execution Completed</td><td>Executed÷Total×100</td><td>400/800 = <b>50%</b></td></tr>
+      <tr><td>Pass %</td><td>Passed÷Total×100</td><td>760/800 = <b>95%</b></td></tr>
+      <tr><td>Critical Defect %</td><td>Critical÷Total×100</td><td>4/40 = <b>10%</b></td></tr>
+    </table>
+  </div>
+</div>
+</details>
+
+<!-- PART 12 -->
+<details class="topic p12" id="p12">
+<summary><div class="num">12</div><div><h2>Resume, Projects &amp; Interview Prep</h2><span class="sub">Sample projects & question areas</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <h3>Sample real projects to mention</h3>
+    <ul class="simple">
+      <li>E-commerce ("FactoryCart," like industrybuying.com)</li>
+      <li>OrangeHRM — HR management (client context: Vedanta)</li>
+      <li>Swift — Automotive (Toyota, KIA)</li>
+      <li>Insurance domain project</li>
+      <li>Philips + L&T — IoT project</li>
+      <li>MPF (Maddie's Pet Forum) — Facebook-like, animal welfare</li>
+    </ul>
+    <div class="example"><b>Reminder</b>Always work under an NDA when discussing real client details.</div>
+  </div>
+  <div class="card">
+    <h3>What recruiters/interviewers ask</h3>
+    <ul class="simple">
+      <li>Years of experience, relevant experience, CTC/ECTC, notice period</li>
+      <li>Tool used (Rally/Jira), methodology (Agile), sprint duration, team size</li>
+      <li>Test plan template? Where test cases are stored?</li>
+      <li>App purpose, personas, reporting style</li>
+      <li>API round: tool + documentation. Automation round: language, VC, CI/CD</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Project description template</h3>
+    <pre>Project Name:
+Client:
+Domain:
+Purpose:
+How it helps end users:
+Who uses it (personas):
+Important features:
+Roles & Responsibilities:</pre>
+  </div>
+</div>
+</details>
+
+<!-- PART 13 -->
+<details class="topic p13" id="p13">
+<summary><div class="num">13</div><div><h2>API Testing — Full Detail</h2><span class="sub">Methods, status codes, Postman, real OrangeHRM calls</span></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <p>An API is like a <b>waiter</b>: carries your request to the server (kitchen) and returns the response (food).</p>
+    <h3>6 things needed for an API request</h3>
+    <p><code>URL</code> · <code>HTTP Method</code> · <code>Params</code> · <code>Authorization</code> · <code>Headers</code> · <code>Body/Payload</code></p>
+  </div>
+  <div class="card">
+    <h3>HTTP Methods</h3>
+    <table>
+      <tr><th>Method</th><th>Purpose</th><th>Example</th></tr>
+      <tr><td><span class="pill" style="background:#0e2733;color:#38bdf8;">GET</span></td><td>Read data</td><td>Get all employees</td></tr>
+      <tr><td><span class="pill" style="background:#0e2a24;color:#34d399;">POST</span></td><td>Create resource</td><td>Add new employee</td></tr>
+      <tr><td><span class="pill" style="background:#2c1c0e;color:#fb923c;">PUT</span></td><td>Replace entire resource</td><td>Update all personal details</td></tr>
+      <tr><td><span class="pill" style="background:#211c38;color:#a78bfa;">PATCH</span></td><td>Update specific field(s)</td><td>Update just last name</td></tr>
+      <tr><td><span class="pill" style="background:#2c1416;color:#f87171;">DELETE</span></td><td>Remove resource</td><td>Delete employee</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h3>Real API examples (OrangeHRM)</h3>
+    <pre>GET  /api/v2/pim/employees?limit=50&offset=0&sortField=firstName&sortOrder=ASC
+POST /api/v2/pim/employees
+     Body: {"firstName":"Raju","lastName":"G","employeeId":"87654"}
+PUT  /api/v2/pim/employees/238/personal-details
+     Body: {"firstName":"Spoorthi","lastName":"E","maritalStatus":"Married", ...}</pre>
+    <h4>CRUD team assignment example</h4>
+    <p>Roopa → Paygrade · Ruthvik → Employment Status · Koushal → Buzz Post · Hanumanth → Job Categories · Harshitha → Work Shifts · Latha → User Management</p>
+  </div>
+  <div class="card">
+    <h3>Status codes</h3>
+    <table>
+      <tr><th>Range</th><th>Meaning</th><th>Examples</th></tr>
+      <tr><td>2xx</td><td>Success</td><td>200 OK · 201 Created · 204 No Content</td></tr>
+      <tr><td>4xx</td><td>Client error</td><td>400 Bad Request · 401 Unauthorized · 403 Forbidden · 404 Not Found · 409 Conflict · 422 Unprocessable</td></tr>
+      <tr><td>5xx</td><td>Server error</td><td>500 Internal Server Error · 502 Bad Gateway · 503 Service Unavailable</td></tr>
+    </table>
+    <div class="example"><b>401 vs 403</b>401 = server doesn't know who you are. 403 = server knows you but you lack permission.</div>
+  </div>
+  <div class="card">
+    <h3>Postman essentials</h3>
+    <ul class="simple">
+      <li><b>Workspace</b> — one per project, shared with team</li>
+      <li><b>Collections</b> — group requests by module; import/export/run whole collection</li>
+      <li><b>Global vs Collection variables</b> — collection-level value overrides global (e.g. global x=30, collection x=45 → resolves to 45)</li>
+      <li><b>Environment variables</b> — <code>{{baseURL}}</code> = www.qa.com in QA, www.uat.com in UAT</li>
+    </ul>
+  </div>
+</div>
+</details>
+
+<!-- GLOSSARY -->
+<details class="topic" id="glossary" style="border-color:#334155;">
+<summary><div class="num" style="background:#334155;">✓</div><div><h2>Quick Glossary</h2></div><span class="chev">▶</span></summary>
+<div class="body">
+  <div class="card">
+    <dl class="glossary">
+      <dt>SDLC / STLC</dt><dd>Software Development / Testing Life Cycle</dd>
+      <dt>FRS</dt><dd>Functional Requirement Specification</dd>
+      <dt>HLD / LLD</dt><dd>High-Level / Low-Level Design</dd>
+      <dt>SPOC</dt><dd>Single Point of Contact</dd>
+      <dt>PO / BA / SM</dt><dd>Product Owner / Business Analyst / Scrum Master</dd>
+      <dt>DoD</dt><dd>Definition of Done</dd>
+      <dt>RTM</dt><dd>Requirement Traceability Matrix</dd>
+      <dt>UAT</dt><dd>User Acceptance Testing</dd>
+      <dt>CRUD</dt><dd>Create, Read, Update, Delete</dd>
+      <dt>SP / KT / RCA</dt><dd>Story Point / Knowledge Transfer / Root Cause Analysis</dd>
+      <dt>CI/CD</dt><dd>Continuous Integration / Continuous Deployment</dd>
+    </dl>
+  </div>
+</div>
+</details>
+
+</main>
+
+<footer>Complete detailed notes, fully color-coded for easy scanning — tap any section to expand or collapse it. 💡</footer>
+
+</body>
+</html>

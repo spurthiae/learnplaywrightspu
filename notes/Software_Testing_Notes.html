@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Software Testing — Visual Notes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --bg:#0f1720;
+    --panel:#141f2b;
+    --ink:#eaf2f5;
+    --sub:#9fb4c2;
+    --line:#22333f;
+
+    --c1:#38bdf8;  /* sky   - SDLC/basics */
+    --c1-soft:#0e2733;
+    --c2:#a78bfa;  /* violet - agile */
+    --c2-soft:#211c38;
+    --c3:#34d399;  /* green - STLC / test plan */
+    --c3-soft:#0e2a24;
+    --c4:#fb923c;  /* orange - test case design */
+    --c4-soft:#2c1c0e;
+    --c5:#f472b6;  /* pink - testing types */
+    --c5-soft:#2b1522;
+    --c6:#f87171;  /* red - defects */
+    --c6-soft:#2c1416;
+    --c7:#facc15;  /* yellow - metrics */
+    --c7-soft:#2b2308;
+    --c8:#22d3ee;  /* cyan - API */
+    --c8-soft:#0c2730;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 500px at 10% -10%, #16283a 0%, transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, #241a34 0%, transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font-family: "Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    line-height:1.55;
+    padding-bottom:80px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:64px 24px 40px;
+    text-align:center;
+    position:relative;
+  }
+  .hero .kicker{
+    display:inline-block;
+    font-size:12px;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--c1);
+    background:var(--c1-soft);
+    border:1px solid #1c3a4a;
+    padding:6px 14px;
+    border-radius:999px;
+    margin-bottom:18px;
+    font-weight:700;
+  }
+  .hero h1{
+    font-family: Georgia, "Times New Roman", serif;
+    font-size:clamp(32px,5vw,56px);
+    margin:0 0 12px;
+    background:linear-gradient(90deg,#38bdf8,#a78bfa 40%,#f472b6 75%,#facc15);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    line-height:1.1;
+  }
+  .hero p{
+    color:var(--sub);
+    max-width:640px;
+    margin:0 auto;
+    font-size:16px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav.chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+    max-width:1000px;
+    margin:32px auto 0;
+    padding:0 20px;
+  }
+  nav.chips a{
+    text-decoration:none;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink);
+    padding:8px 14px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--panel);
+    transition:transform .15s ease, border-color .15s ease;
+    white-space:nowrap;
+  }
+  nav.chips a:hover{ transform:translateY(-2px); border-color:var(--c1); color:var(--c1); }
+
+  /* ---------- LAYOUT ---------- */
+  main{
+    max-width:980px;
+    margin:0 auto;
+    padding:20px;
+  }
+  section.topic{
+    margin-top:56px;
+    scroll-margin-top:24px;
+  }
+  .topic-head{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:18px;
+  }
+  .num{
+    font-family:Georgia, serif;
+    font-weight:700;
+    font-size:22px;
+    width:44px;height:44px;
+    flex:none;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:12px;
+    color:#0f1720;
+  }
+  .topic-head h2{
+    margin:0;
+    font-size:24px;
+    letter-spacing:.01em;
+  }
+  .topic-head .tag{
+    margin-left:auto;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    padding:5px 10px;
+    border-radius:999px;
+    font-weight:700;
+  }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:22px 24px;
+    margin-bottom:16px;
+  }
+  .card h3{
+    margin-top:0;
+    font-size:16px;
+  }
+
+  /* example callout */
+  .example{
+    border-left:4px solid;
+    border-radius:10px;
+    padding:14px 16px;
+    margin:14px 0;
+    font-size:14.5px;
+  }
+  .example b{ display:block; font-size:12px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:4px; }
+
+  /* tables */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:10px 0;
+    font-size:14px;
+  }
+  th,td{
+    text-align:left;
+    padding:9px 10px;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  th{
+    color:var(--sub);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    font-weight:700;
+  }
+  tr:last-child td{ border-bottom:none; }
+
+  /* pill badges */
+  .pill{
+    display:inline-block;
+    padding:2px 9px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+  }
+
+  /* flow diagram */
+  .flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    margin:14px 0;
+  }
+  .flow .step{
+    background:var(--c1-soft);
+    border:1px solid #1c3a4a;
+    color:var(--c1);
+    padding:8px 14px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:600;
+    white-space:nowrap;
+  }
+  .flow .arrow{ color:var(--sub); font-size:16px; }
+
+  ul.simple{ margin:8px 0; padding-left:20px; }
+  ul.simple li{ margin-bottom:6px; font-size:14.5px; }
+
+  code{
+    background:#0c1620;
+    border:1px solid var(--line);
+    padding:1px 6px;
+    border-radius:5px;
+    font-size:13px;
+    color:#7ee8c4;
+  }
+
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:700px){ .grid2{ grid-template-columns:1fr; } nav.chips{display:none;} }
+
+  .glossary{
+    display:grid;
+    grid-template-columns:1fr 2fr;
+    gap:10px 20px;
+    font-size:14.5px;
+  }
+  .glossary dt{ font-weight:700; color:var(--c1); }
+  .glossary dd{ margin:0 0 10px; color:var(--sub); }
+
+  footer{
+    text-align:center;
+    color:var(--sub);
+    font-size:13px;
+    margin-top:70px;
+    padding:0 20px;
+  }
+
+  /* section-specific accent classes */
+  .s1 .num{background:var(--c1);} .s1 .tag{color:var(--c1); background:var(--c1-soft);} .s1 .example{border-color:var(--c1); background:var(--c1-soft);}
+  .s2 .num{background:var(--c2);} .s2 .tag{color:var(--c2); background:var(--c2-soft);} .s2 .example{border-color:var(--c2); background:var(--c2-soft);}
+  .s3 .num{background:var(--c3);} .s3 .tag{color:var(--c3); background:var(--c3-soft);} .s3 .example{border-color:var(--c3); background:var(--c3-soft);}
+  .s4 .num{background:var(--c4);} .s4 .tag{color:var(--c4); background:var(--c4-soft);} .s4 .example{border-color:var(--c4); background:var(--c4-soft);}
+  .s5 .num{background:var(--c5);} .s5 .tag{color:var(--c5); background:var(--c5-soft);} .s5 .example{border-color:var(--c5); background:var(--c5-soft);}
+  .s6 .num{background:var(--c6);} .s6 .tag{color:var(--c6); background:var(--c6-soft);} .s6 .example{border-color:var(--c6); background:var(--c6-soft);}
+  .s7 .num{background:var(--c7);} .s7 .tag{color:var(--c7); background:var(--c7-soft);} .s7 .example{border-color:var(--c7); background:var(--c7-soft);}
+  .s8 .num{background:var(--c8);} .s8 .tag{color:var(--c8); background:var(--c8-soft);} .s8 .example{border-color:var(--c8); background:var(--c8-soft);}
+
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="kicker">QA Learning Notes</span>
+  <h1>Software Testing,<br>Made Simple</h1>
+  <p>The same concepts from your class — reorganized, color-coded, and paired with real apps like WhatsApp, PhonePe, Zomato and OrangeHRM so they're easy to remember.</p>
+</div>
+
+<nav class="chips">
+  <a href="#s1">1 · SDLC Basics</a>
+  <a href="#s2">2 · Agile</a>
+  <a href="#s3">3 · STLC & Test Plan</a>
+  <a href="#s4">4 · Test Case Design</a>
+  <a href="#s5">5 · Types of Testing</a>
+  <a href="#s6">6 · Defect Life Cycle</a>
+  <a href="#s7">7 · Metrics</a>
+  <a href="#s8">8 · API Testing</a>
+</nav>
+
+<main>
+
+  <!-- 1 -->
+  <section class="topic s1" id="s1">
+    <div class="topic-head">
+      <div class="num">1</div>
+      <h2>SDLC Basics — Software, Companies & Life Cycle</h2>
+      <span class="tag">foundations</span>
+    </div>
+
+    <div class="card">
+      <h3>Types of software</h3>
+      <table>
+        <tr><th>Type</th><th>Meaning</th><th>Example</th></tr>
+        <tr><td>Web App</td><td>Runs in a browser</td><td>Amazon.com, Flipkart.com</td></tr>
+        <tr><td>Mobile App</td><td>Runs on phone (.apk)</td><td>PhonePe, WhatsApp</td></tr>
+        <tr><td>Desktop App</td><td>Installed on a PC</td><td>Tally, Photoshop</td></tr>
+      </table>
+      <div class="example"><b>Real example</b>PhonePe features to test: create account · send money by mobile number · send money by bank number · send via UPI · send via scanner.</div>
+    </div>
+
+    <div class="card">
+      <h3>Types of companies</h3>
+      <ul class="simple">
+        <li><b>Service-based</b> — builds software <i>for</i> clients. e.g. TCS, Infosys, Wipro, Cognizant → Infosys building IKEA's inventory website.</li>
+        <li><b>Product-based</b> — builds & owns its own product. e.g. SAP, Ola, Zomato, Amazon.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>SDLC — Software Development Life Cycle</h3>
+      <div class="flow">
+        <div class="step">1. Requirement</div><span class="arrow">→</span>
+        <div class="step">2. Design</div><span class="arrow">→</span>
+        <div class="step">3. Development</div><span class="arrow">→</span>
+        <div class="step">4. Testing</div><span class="arrow">→</span>
+        <div class="step">5. Release</div><span class="arrow">→</span>
+        <div class="step">6. Maintenance</div>
+      </div>
+      <div class="example"><b>Real example</b>Before building a WhatsApp-like app, the team first lists 40+ features (send message, voice/video call, status, groups, 2-step verification…) — that's Requirement Gathering.</div>
+    </div>
+
+    <div class="card">
+      <h3>SDLC models at a glance</h3>
+      <table>
+        <tr><th>Model</th><th>How it works</th><th>Like...</th></tr>
+        <tr><td>Waterfall</td><td>One phase fully finishes before the next starts</td><td>Building a house wall-by-wall, no going back</td></tr>
+        <tr><td>V-Model</td><td>Every design step has a matching planned test step</td><td>Blueprint + inspection checklist done together</td></tr>
+        <tr><td>Prototype</td><td>Build a demo first, get approval, then build for real</td><td>Showing a sample house design first</td></tr>
+        <tr><td>Spiral</td><td>Repeat requirement→build→test in cycles</td><td>Reviewing progress after each floor</td></tr>
+        <tr><td>Agile</td><td>Small pieces delivered in short sprints</td><td>Room-by-room delivery, client sees progress every 2 weeks</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="topic s2" id="s2">
+    <div class="topic-head">
+      <div class="num">2</div>
+      <h2>Agile — Roles, Structure & Ceremonies</h2>
+      <span class="tag">most used today</span>
+    </div>
+
+    <div class="card">
+      <h3>Work breakdown</h3>
+      <div class="flow">
+        <div class="step">EPIC (big goal)</div><span class="arrow">→</span>
+        <div class="step">Feature</div><span class="arrow">→</span>
+        <div class="step">User Story (testable unit)</div>
+      </div>
+      <div class="example"><b>Real example</b>EPIC: "Employee Management" → Feature: "Employee Profile" → User Story: "Add Employee" (with description + acceptance criteria).</div>
+    </div>
+
+    <div class="card grid2">
+      <div>
+        <h3>Roles</h3>
+        <ul class="simple">
+          <li><b>Product Owner</b> — client's voice, writes stories, sets priority, approves test plans</li>
+          <li><b>Scrum Master</b> — runs meetings, removes blockers, motivates team</li>
+          <li><b>Team members</b> — devs & testers who build and verify the work</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Key terms</h3>
+        <ul class="simple">
+          <li><b>Velocity</b> — story points actually completed in a sprint</li>
+          <li><b>Spillover</b> — unfinished story moved to next sprint</li>
+          <li><b>Spike</b> — a research-only story</li>
+          <li><b>Burndown chart</b> — graph of remaining work vs time</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Agile ceremonies</h3>
+      <table>
+        <tr><th>Meeting</th><th>When</th><th>Duration</th><th>Purpose</th></tr>
+        <tr><td>Sprint Planning</td><td>Day 1 of sprint</td><td>2–4 hrs</td><td>Assign stories & story points</td></tr>
+        <tr><td>Daily Stand-up</td><td>Every day</td><td>15 min</td><td>Yesterday / Today / Blockers</td></tr>
+        <tr><td>Backlog Grooming</td><td>Mid-sprint</td><td>1–2 hrs</td><td>Estimate upcoming stories (Fibonacci: 1,2,3,5,8,13)</td></tr>
+        <tr><td>Sprint Review</td><td>End of sprint</td><td>2 hrs</td><td>Demo finished work to stakeholders</td></tr>
+        <tr><td>Retrospective</td><td>Start of next sprint</td><td>1 hr</td><td>What went well / wrong / to improve</td></tr>
+      </table>
+      <div class="example"><b>Real example — sprint planning</b>User Story "Add Employee" = 3 story points → assigned to Hanumanth. "Edit Employee" = 2 points → Latha.</div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="topic s3" id="s3">
+    <div class="topic-head">
+      <div class="num">3</div>
+      <h2>STLC & Test Plan</h2>
+      <span class="tag">testing's own cycle</span>
+    </div>
+
+    <div class="card">
+      <h3>STLC — Software Testing Life Cycle</h3>
+      <div class="flow">
+        <div class="step">1. Requirement Analysis</div><span class="arrow">→</span>
+        <div class="step">2. Test Plan</div><span class="arrow">→</span>
+        <div class="step">3. Test Case Design</div><span class="arrow">→</span>
+        <div class="step">4. Env Setup</div><span class="arrow">→</span>
+        <div class="step">5. Execution</div><span class="arrow">→</span>
+        <div class="step">6. Closure</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>7 testing principles (in plain English)</h3>
+      <ul class="simple">
+        <li>You can't test every possible input — it's impossible.</li>
+        <li>Testing shows bugs exist, it never proves they're all gone.</li>
+        <li>Bugs cluster — some modules break more than others.</li>
+        <li>Keep changing your testing approach ("pesticide paradox").</li>
+        <li>Finding bugs early saves time & money.</li>
+        <li>Not every test type applies to every project — it depends.</li>
+        <li>A failure isn't always the tester's fault.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Test Plan (IEEE 829) — simplified, using BookMyShow</h3>
+      <table>
+        <tr><th>Section</th><th>Real example</th></tr>
+        <tr><td>Scope / Out of scope</td><td>In: Chrome, Firefox, Edge, Safari · Out: UC Browser, Opera</td></tr>
+        <tr><td>Features to test</td><td>"Display recommended movies", "Search"</td></tr>
+        <tr><td>Not to test</td><td>Spike/technical stories, e.g. "Code refactor of login"</td></tr>
+        <tr><td>Entry criteria</td><td>Dev 100% done + unit tested + test cases reviewed</td></tr>
+        <tr><td>Exit criteria</td><td>All features working + all defects closed</td></tr>
+        <tr><td>Deliverables</td><td>Test plan, test cases, test report, defect report, RTM</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="topic s4" id="s4">
+    <div class="topic-head">
+      <div class="num">4</div>
+      <h2>Test Case & Design Techniques</h2>
+      <span class="tag">how to write great tests</span>
+    </div>
+
+    <div class="card">
+      <h3>Sample test case — Login</h3>
+      <table>
+        <tr><td><b>ID</b></td><td>TC1234</td></tr>
+        <tr><td><b>Title</b></td><td>Verify login with valid credentials</td></tr>
+        <tr><td><b>Steps</b></td><td>Launch URL → enter username → enter password → click Login</td></tr>
+        <tr><td><b>Test data</b></td><td><code>Admin / admin123</code></td></tr>
+        <tr><td><b>Expected</b></td><td>User lands on dashboard</td></tr>
+      </table>
+      <div class="example"><b>Why we write test cases</b>They're a checklist during execution, evidence of what was tested, and the base for smoke, regression & automation suites.</div>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>Equivalence Partitioning</h3>
+        <p>Group inputs into classes, test one value per group.</p>
+        <div class="example"><b>Example</b>Field accepts 1–100 → test one alphabet, one special char, one empty, one valid number (50). No need to test all 100 values.</div>
+      </div>
+      <div class="card">
+        <h3>Boundary Value Analysis (BVA)</h3>
+        <p>Bugs love edges — test just around the limit.</p>
+        <div class="example"><b>Example</b>5MB upload limit → test 5119KB, 5120KB (=5MB), 5121KB.</div>
+      </div>
+      <div class="card">
+        <h3>Decision Table</h3>
+        <p>Used when output depends on a combination of conditions.</p>
+        <div class="example"><b>Example</b>School app: Holiday notification → sent to Parent ✅ Student ✅ Teacher ✅ Admin ✅ Principal ✅. Payment Due → only Parent & Admin.</div>
+      </div>
+      <div class="card">
+        <h3>State Transition</h3>
+        <p>Used when behavior depends on the previous state.</p>
+        <div class="example"><b>Example</b>ATM: wrong PIN once → 2 chances left; wrong again → 1 chance; wrong 3rd time → card blocked.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="topic s5" id="s5">
+    <div class="topic-head">
+      <div class="num">5</div>
+      <h2>Levels & Types of Testing</h2>
+      <span class="tag">the big map</span>
+    </div>
+
+    <div class="card">
+      <h3>4 Levels (the testing pyramid)</h3>
+      <table>
+        <tr><th>Level</th><th>Done by</th><th>Example</th></tr>
+        <tr><td>Unit</td><td>Developer</td><td>Testing one "calculate discount" function</td></tr>
+        <tr><td>Integration</td><td>QA</td><td>Does "Add to Cart" pass data to "Checkout" correctly?</td></tr>
+        <tr><td>System</td><td>QA</td><td>Full flow: search → seat → pay → ticket (BookMyShow)</td></tr>
+        <tr><td>Acceptance</td><td>PO / Beta users</td><td>PO signs off like a real customer before release</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>By source-code access</h3>
+      <table>
+        <tr><th>Type</th><th>Who</th><th>Code access?</th></tr>
+        <tr><td>White Box</td><td>Developer</td><td>Yes — line by line</td></tr>
+        <tr><td>Black Box</td><td>QA Tester</td><td>No — UI/output only</td></tr>
+        <tr><td>Grey Box</td><td>Dev + Tester</td><td>Partial — together</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>During the dev cycle</h3>
+      <table>
+        <tr><th>Type</th><th>What</th><th>Example</th></tr>
+        <tr><td>Smoke</td><td>Is the build stable enough to test?</td><td>Quick check: Add User, Add Employee work</td></tr>
+        <tr><td>Sanity</td><td>Test just the changed area</td><td>Login bug fixed → only test login</td></tr>
+        <tr><td>Retesting</td><td>Re-check the exact fixed bug</td><td>"Add Employee with special chars" fix verified</td></tr>
+        <tr><td>Regression</td><td>Deep test of the whole app</td><td>700–3000 test cases before release</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Non-functional types</h3>
+      <table>
+        <tr><th>Type</th><th>Checks</th><th>Example</th></tr>
+        <tr><td>Usability</td><td>Is it easy to use?</td><td>Are WhatsApp icons clear to new users?</td></tr>
+        <tr><td>Performance</td><td>Speed under load</td><td>Zomato handling 1 lakh orders at once (JMeter)</td></tr>
+        <tr><td>Security</td><td>Protection from attacks</td><td>Penetration testing on a banking app</td></tr>
+        <tr><td>I18N/L10N</td><td>Language, currency, time zone</td><td>Amazon shows ₹ in India, $ in the US</td></tr>
+        <tr><td>Exploratory</td><td>Unscripted free testing</td><td>Randomly poking around a new Swiggy feature</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="topic s6" id="s6">
+    <div class="topic-head">
+      <div class="num">6</div>
+      <h2>Defect (Bug) Life Cycle</h2>
+      <span class="tag">from found to fixed</span>
+    </div>
+
+    <div class="card">
+      <div class="flow">
+        <div class="step" style="background:var(--c6-soft); color:var(--c6); border-color:#3a1c1e;">New/Open</div><span class="arrow">→</span>
+        <div class="step" style="background:var(--c6-soft); color:var(--c6); border-color:#3a1c1e;">Assigned</div><span class="arrow">→</span>
+        <div class="step" style="background:var(--c6-soft); color:var(--c6); border-color:#3a1c1e;">In Progress</div><span class="arrow">→</span>
+        <div class="step" style="background:var(--c6-soft); color:var(--c6); border-color:#3a1c1e;">Fixed</div><span class="arrow">→</span>
+        <div class="step" style="background:var(--c6-soft); color:var(--c6); border-color:#3a1c1e;">Pending Retest</div><span class="arrow">→</span>
+        <div class="step" style="background:var(--c6-soft); color:var(--c6); border-color:#3a1c1e;">Verified</div><span class="arrow">→</span>
+        <div class="step" style="background:var(--c6-soft); color:var(--c6); border-color:#3a1c1e;">Closed</div>
+      </div>
+      <p style="font-size:14px;color:var(--sub)">Other paths: <b>Reopen</b> (still broken) · <b>Rejected</b> (dev disagrees) · <b>Deferred</b> (pushed to a future sprint)</p>
+    </div>
+
+    <div class="card">
+      <h3>Severity vs Priority</h3>
+      <div class="example" style="border-color:#f87171;"><b>Severity S1 / Priority P1</b>Login page completely broken → high impact, fix immediately.</div>
+      <div class="example" style="border-color:#facc15;"><b>Severity S4 / Priority P4</b>Spelling mistake in footer → minor, fix whenever.</div>
+    </div>
+
+    <div class="card">
+      <h3>Handy terms</h3>
+      <ul class="simple">
+        <li><b>Defect Leakage</b> — missed in QA, found in Production</li>
+        <li><b>Hotfix</b> — urgent fix pushed straight to Production</li>
+        <li><b>Defect Triage</b> — dev + tester meeting to find root cause</li>
+        <li><b>RCA</b> — developer documents <i>why</i> the bug happened</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="topic s7" id="s7">
+    <div class="topic-head">
+      <div class="num">7</div>
+      <h2>Testing Metrics</h2>
+      <span class="tag">simple math</span>
+    </div>
+    <div class="card">
+      <table>
+        <tr><th>Metric</th><th>Formula</th><th>Example</th></tr>
+        <tr><td>% Execution Completed</td><td>Executed ÷ Total × 100</td><td>400/800 = <b>50%</b></td></tr>
+        <tr><td>Pass %</td><td>Passed ÷ Executed × 100</td><td>760/800 = <b>95%</b></td></tr>
+        <tr><td>Critical Defect %</td><td>Critical ÷ Total Defects × 100</td><td>4/40 = <b>10%</b></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="topic s8" id="s8">
+    <div class="topic-head">
+      <div class="num">8</div>
+      <h2>API Testing Basics</h2>
+      <span class="tag">backend testing</span>
+    </div>
+
+    <div class="card">
+      <p>An API is like a <b>waiter</b>: it carries your order (request) to the kitchen (server) and brings back the food (response).</p>
+      <h3>HTTP Methods — Employee Example</h3>
+      <table>
+        <tr><th>Method</th><th>Purpose</th><th>Example</th></tr>
+        <tr><td><span class="pill" style="background:#0e2733;color:#38bdf8;">GET</span></td><td>Read data</td><td>Get list of employees</td></tr>
+        <tr><td><span class="pill" style="background:#0e2a24;color:#34d399;">POST</span></td><td>Create data</td><td>Add a new employee</td></tr>
+        <tr><td><span class="pill" style="background:#2c1c0e;color:#fb923c;">PUT</span></td><td>Replace entire record</td><td>Update all personal details</td></tr>
+        <tr><td><span class="pill" style="background:#211c38;color:#a78bfa;">PATCH</span></td><td>Update one field</td><td>Update just the last name</td></tr>
+        <tr><td><span class="pill" style="background:#2c1416;color:#f87171;">DELETE</span></td><td>Remove data</td><td>Delete an employee</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Status codes</h3>
+      <table>
+        <tr><th>Range</th><th>Meaning</th><th>Examples</th></tr>
+        <tr><td>2xx</td><td>Success</td><td>200 OK · 201 Created</td></tr>
+        <tr><td>4xx</td><td>Client error</td><td>400 Bad Request · 401 Unauthorized · 403 Forbidden · 404 Not Found</td></tr>
+        <tr><td>5xx</td><td>Server error</td><td>500 Internal Server Error · 503 Service Unavailable</td></tr>
+      </table>
+      <div class="example"><b>401 vs 403 — interview favorite</b>401 = server doesn't know who you are. 403 = server knows you, but you're not allowed in.</div>
+    </div>
+
+    <div class="card">
+      <h3>Postman essentials</h3>
+      <ul class="simple">
+        <li><b>Workspace</b> — one per project, shared with the team</li>
+        <li><b>Collection</b> — group requests by module/feature</li>
+        <li><b>Environment variable</b> — e.g. <code>{{baseURL}}</code> = <code>www.qa.com</code> in QA, <code>www.uat.com</code> in UAT</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="topic" id="glossary">
+    <div class="topic-head">
+      <div class="num" style="background:#334155;">✓</div>
+      <h2>Quick Glossary</h2>
+    </div>
+    <div class="card">
+      <dl class="glossary">
+        <dt>FRS</dt><dd>Functional Requirement Specification</dd>
+        <dt>HLD / LLD</dt><dd>High-Level Design / Low-Level Design</dd>
+        <dt>RTM</dt><dd>Requirement Traceability Matrix — links stories ↔ tests ↔ defects</dd>
+        <dt>UAT</dt><dd>User Acceptance Testing</dd>
+        <dt>CRUD</dt><dd>Create, Read, Update, Delete</dd>
+        <dt>SPOC</dt><dd>Single Point of Contact</dd>
+        <dt>DoD</dt><dd>Definition of Done — checklist before a story is "done"</dd>
+      </dl>
+    </div>
+  </section>
+
+</main>
+
+<footer>Made from your class notes — same concepts, simplified &amp; color-coded for easy revision. 💡</footer>
+
+</body>
+</html>
