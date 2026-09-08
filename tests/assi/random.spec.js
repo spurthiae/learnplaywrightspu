@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('demoqa json', async ({ page }) => {
+test('demoqa cli', async ({ page }) => {
     await page.goto('https://demoqa.com/text-box');
     let randomchars = (Math.random() + 1).toString(36).substring(7);
     await page.getByRole('textbox', { name: 'Full Name' }).fill('John Doe'+randomchars);
