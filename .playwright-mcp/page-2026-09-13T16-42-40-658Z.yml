@@ -1,0 +1,115 @@
+- generic [ref=f1e3]:
+  - generic:
+    - complementary:
+      - navigation "Sidepanel":
+        - generic:
+          - link [ref=f1e4] [cursor=pointer]:
+            - /url: https://www.orangehrm.com/
+            - img "client brand banner" [ref=f1e6]
+          - generic [ref=f1e7] [cursor=pointer]: 
+        - generic:
+          - generic [ref=f1e8]:
+            - generic [ref=f1e9]:
+              - textbox "Search" [ref=f1e12]
+              - text: 
+            - separator
+          - list [ref=f1e13]:
+            - listitem:
+              - link "Admin" [ref=f1e14] [cursor=pointer]:
+                - /url: /web/index.php/admin/viewAdminModule
+            - listitem:
+              - link "PIM" [ref=f1e18] [cursor=pointer]:
+                - /url: /web/index.php/pim/viewPimModule
+            - listitem:
+              - link "Leave" [ref=f1e33] [cursor=pointer]:
+                - /url: /web/index.php/leave/viewLeaveModule
+            - listitem:
+              - link "Time" [ref=f1e37] [cursor=pointer]:
+                - /url: /web/index.php/time/viewTimeModule
+            - listitem:
+              - link "Recruitment" [ref=f1e44] [cursor=pointer]:
+                - /url: /web/index.php/recruitment/viewRecruitmentModule
+            - listitem:
+              - link "My Info" [ref=f1e51] [cursor=pointer]:
+                - /url: /web/index.php/pim/viewMyDetails
+            - listitem:
+              - link "Performance" [ref=f1e58] [cursor=pointer]:
+                - /url: /web/index.php/performance/viewPerformanceModule
+            - listitem:
+              - link "Dashboard" [ref=f1e67] [cursor=pointer]:
+                - /url: /web/index.php/dashboard/index
+            - listitem:
+              - link "Directory" [ref=f1e71] [cursor=pointer]:
+                - /url: /web/index.php/directory/viewDirectory
+            - listitem:
+              - link "Maintenance" [ref=f1e75] [cursor=pointer]:
+                - /url: /web/index.php/maintenance/viewMaintenanceModule
+            - listitem:
+              - link "Claim" [ref=f1e80] [cursor=pointer]:
+                - /url: /web/index.php/claim/viewClaimModule
+            - listitem:
+              - link "Buzz" [ref=f1e88] [cursor=pointer]:
+                - /url: /web/index.php/buzz/viewBuzz
+    - banner [ref=f1e92]:
+      - generic [ref=f1e93]:
+        - generic [ref=f1e94]:
+          - generic [ref=f1e95] [cursor=pointer]: 
+          - heading "Dashboard" [level=6] [ref=f1e97]
+        - link [ref=f1e99]:
+          - /url: https://orangehrm.com/open-source/upgrade-to-advanced
+          - button "Upgrade" [ref=f1e100] [cursor=pointer]
+        - list [ref=f1e106]:
+          - listitem [ref=f1e107]:
+            - generic [ref=f1e108] [cursor=pointer]:
+              - img "profile picture" [ref=f1e109]
+              - generic [ref=f1e110]: 
+      - navigation "Topbar Menu" [ref=f1e112]:
+        - list [ref=f1e113]:
+          - button "" [ref=f1e115] [cursor=pointer]
+  - generic [ref=f1e117]:
+    - generic [ref=f1e119]:
+      - generic [ref=f1e121]:
+        - generic [ref=f1e123]:
+          - generic [ref=f1e124]: 
+          - paragraph [ref=f1e125]: Time at Work
+        - separator [ref=f1e126]
+      - generic [ref=f1e130]:
+        - generic [ref=f1e132]:
+          - generic [ref=f1e133]: 
+          - paragraph [ref=f1e134]: My Actions
+        - separator [ref=f1e135]
+        - generic [ref=f1e137]:
+          - img "No Content"
+          - paragraph [ref=f1e138]: No Pending Actions to Perform
+      - generic [ref=f1e140]:
+        - generic [ref=f1e142]:
+          - generic [ref=f1e143]: 
+          - paragraph [ref=f1e144]: Quick Launch
+        - separator [ref=f1e145]
+      - generic [ref=f1e149]:
+        - generic [ref=f1e151]:
+          - generic [ref=f1e152]: 
+          - paragraph [ref=f1e153]: Buzz Latest Posts
+        - separator [ref=f1e154]
+      - generic [ref=f1e158]:
+        - generic [ref=f1e159]:
+          - paragraph [ref=f1e164]: Employees on Leave Today
+          - generic [ref=f1e165] [cursor=pointer]: 
+        - separator [ref=f1e166]
+      - generic [ref=f1e170]:
+        - generic [ref=f1e172]:
+          - generic [ref=f1e173]: 
+          - paragraph [ref=f1e174]: Employee Distribution by Sub Unit
+        - separator [ref=f1e175]
+      - generic [ref=f1e179]:
+        - generic [ref=f1e181]:
+          - generic [ref=f1e182]: 
+          - paragraph [ref=f1e183]: Employee Distribution by Location
+        - separator [ref=f1e184]
+    - generic [ref=f1e187]:
+      - paragraph [ref=f1e188]: OrangeHRM OS 5.9
+      - paragraph [ref=f1e189]:
+        - text: © 2005 - 2026
+        - link "OrangeHRM, Inc" [ref=f1e190] [cursor=pointer]:
+          - /url: http://www.orangehrm.com
+        - text: . All rights reserved.
