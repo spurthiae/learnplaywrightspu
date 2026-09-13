@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 import dotenv from 'dotenv';
-dotenv.config({ path: '.github/workflows/.env.qa' });
+dotenv.config({ path: '.env.qa' });
 
 test('demoqa env', async ({ page }) => {
     await page.goto('https://demoqa.com/text-box');

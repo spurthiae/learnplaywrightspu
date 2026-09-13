@@ -54,7 +54,7 @@ for (const [loop, emp] of Object.entries(employee)) {
     await saveButton.waitFor({ state: 'visible' });
     await saveButton.click();
 
-    // wait for the redirect to the Personal Details page to complete
+    
     await page.waitForURL(/viewPersonalDetails/, { timeout: 15000 });
 
     await expect(page.getByRole('link', { name: 'Employee List' })).toBeVisible();
